@@ -1,0 +1,532 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Spotify top 50 2019 & 2021</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+		<div id="wrapper">
+			<!--Header-->
+				<header id="header">
+					<div class="inner">
+						<!-- Logo -->
+						<a href="index.html" class="logo">
+							<span class="symbol"><img src="images/logo.svg" alt="" /></span>
+						</a>
+
+					<!-- Nav -->
+						<nav>
+							<ul>
+								<li><a href="#menu">Menu</a></li>
+							</ul>
+						</nav>
+					</div>
+				</header>
+			<!-- Menu -->
+				<nav id="menu">
+					<h2>Menu</h2>
+					<ul>
+						<li><a href="index.html">Home</a></li>
+						<li><a href="generic.html">Ipsum veroeros</a></li>
+						<li><a href="generic.html">Tempus etiam</a></li>
+						<li><a href="generic.html">Consequat dolor</a></li>
+						<li><a href="elements.html">Elements</a></li>
+					</ul>
+				</nav>
+
+			<!--Main-->
+				<div id = "main">
+					<div class="inner">
+						<h1>Spotify top50 2019 & 2021</h1>
+						<section>
+							<h2>Index</h2>
+							<hr class="solid">
+							<ol>
+								<li><a href="#Introduction">Introduction</a></li>
+								<li><a href="#DataDescription">Data description</a></li>
+								<li><a href="#Ask">Ask</a></li>
+								<li><a href="#Prepare">Prepare</a></li>
+								<li><a href="#Process">Process</a></li>
+									<ul class="noMargin">
+										<li><a href="#top502019">Top 50 2019</a></li>
+										<li><a href="#top502021">Top 50 2021</a></li>
+										<li><a href="#GlobalAnalysis">Global Analysis</a></li>
+									</ul>
+								<li><a href="#Analyze">Analyze</a></li>
+								<li><a href="#Share">Share & Visualize</a></li>
+							</ol>
+						</section>
+						<section>
+							<a id="Introduction"></a>
+							<h2>Introduction</h2>
+							<hr class ="solid">
+							<p>As we pointed out in the Index section this project will be <b>a complete analysis from the beggining</b>. As this is a personal project we will set our own goals in the <b>Ask</b> section. Although we did not retrieve the data by ourselves, we will make sure it's clean and it fulfills naming conventions for its variables in the <b>Prepare</b> section. In the <b>Process</b> phase we will use our tool of choice (in this case SQL) to extract information about our data in the <b>Analysis</b> section. Finally we will use a visualization tool, such as Tableau, to make charts and visualizations about our data in the <b>Share</b> part.</p>
+							<p>We want to emphasize that the DataFrames (DFs) were obtained on <a href="https://www.kaggle.com" target="_blank">kaggle.com</a> and they were put together by:</p>
+							<ul>
+								<li><a href="https://www.kaggle.com/datasets/leonardopena/top50spotify2019" target="_blank">Top 50 Spotify Songs - 2019</a></h> by Leonardo Henrique</li>
+								<li><a href="https://www.kaggle.com/datasets/equinxx/spotify-top-50-songs-in-2021" target="_blank">Top 50 Spotify Songs - 2021</a> by Hanna Yukhymenko</li>
+							</ul> 
+						</section>
+						<section>
+							<a id="DataDescription"></a>
+							<h2> Data description </h2>
+							<hr class="solid">
+							<p> The variables we will use in the Process, Analysis and Share phases of the project are the following:
+
+								<h3><mark>Top 50 2019</mark></h3>
+								<ul>
+									<li><b>Ranking:</b> Ranking of the song on the chart. </li>
+									<li><b>Track_Name:</b> Name of the track.</li>
+									<li><b>Artist_Name:</b> Name of the artist(s).</li>
+									<li><b>Genre:</b> Genre of the track.</li>
+									<li><b>Beats_Per_Minute:</b> The higher the number the faster the song is.</li>
+									<li><b>Danceability:</b> The higher the value the easier it is to dance.</li>
+									<li><b>Loudness_dB:</b> The higher the value the louder (from -60 to 0dB).</li>
+								</ul>
+
+								<h3><mark>Top 50 2021</mark></h3>
+								<ul>
+									<li><b>Ranking:</b> Ranking of the song on the chart. </li>
+									<li><b>Track_Name:</b> Name of the track.</li>
+									<li><b>Artist_Name:</b> Name of the artist(s).</li>
+									<li><b>Tonality:</b> The key the track is in. 0 = C, 1 = C#, etc.</li>
+									<li><b>Modus:</b> Modality of a track, i.e (0 = Minor ~ Sad, 1 = Major ~ Happy)</li>
+									<li><b>Duration:</b> How long the song is in milliseconds.</li>
+								</ul>
+							</p>
+						</section>
+
+						<section>
+							<a id="Ask"></a>
+							<h2>Ask</h2>
+							<hr class="solid">
+							<p>Some of the questions we will answer with this data are:
+								<ul>
+									<li>What artists appear the most?</li>
+									<li>Which is the most predominant genre?</li>
+									<li>Is an easier-to-dance song most likely to appear at the top?</li>
+									<li>Is there any song repeated in both charts?</li>
+								</ul>
+							</p>
+						</section>
+						<section>
+							<a id="Prepare"></a>
+							<h2>Prepare</h2>
+							<hr class="solid">
+							<p>As we claimed, although our data was previously extracted and prepared due to using imported DFs from Kaggle. We had to make sure there were no blank spaces, NULLs or dirty data in general. We also had to change some of the column names as they were not fulfilling naming convetions such as:</p>
+							<ul>
+								<li>Track.Name => Track_Name</li>
+								<li>Artist.Name => Artist_Name</li>
+								<li>Beats.Per.Minute => Beats_Per_Minute</li>
+								<li>Loudness..dB.. => Loudness_dB</li>
+								<li>Key (Reserved keyword) => Tonality</li>
+								<li>Mode (Reserved keyword) => Modus</li>
+							</ul>
+						</section>
+						<section>
+							<a id="Process"></a>
+							<h2>Process</h2>
+							<hr class="solid">
+							<p>Having all of the data in our database we proceeded to write SQL queries to extract information and be able to answer the previous questions.</p>
+							<a id="top502019"></a>	
+							<h3><mark>Top 50 2019</mark></h3>
+							<h4>Average BPM</h4>
+							<pre>
+								<code>
+SELECT
+	AVG(CAST (Beats_Per_Minute AS Float)) as BPM_Average
+FROM
+	top50_2019
+							</code>
+							</pre>
+							<p><b>OUTPUT:</b> BPM_Average = 120,06 bpm</p>
+							<h4>Frequency of Artists</h4>
+							<pre>
+								<code>
+SELECT
+  Artist_Name,
+  COUNT (Artist_Name) AS Frequency
+FROM
+  top50_2019
+GROUP BY
+  Artist_Name
+ORDER BY 
+  Frequency DESC
+								</code>
+							</pre>
+							<p><b>OUTPUT:</b></p>
+							<div class="table-wrapper">
+								<table class="alt small">
+									<thead>
+										<tr>
+											<th>Artist_Name</th>
+											<th>Frequency</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>Ed Sheeran</td>
+											<td>4</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td>Billie Eilish</td>
+											<td>2</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td>Ariana Grande</td>
+											<td>2</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td>The Chainsmokers</td>
+											<td>2</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td>Shawn Mendes</td>
+											<td>2</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td>...</td>
+											<td>...</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<h4>Frequency of Genre in the top-half faster songs</h4>
+							<p><b>Explanation:</b> We wanted to see which Genres were predominant in the faster (most BPM) songs on the chart. So we took the 25 songs with higher BPM and elaborated the following query:</p>
+							<pre>
+								<code>
+WITH BPM_ordered AS
+(
+    SELECT
+      TOP 25 Beats_Per_Minute,
+	  Genre
+    FROM
+      top50_2019
+    ORDER BY
+      Beats_Per_Minute DESC
+)
+SELECT
+  Genre,
+  COUNT(Genre) AS Frequency,
+  AVG(Beats_Per_Minute) AS AVG_Genre_BPM
+FROM
+  BPM_ordered
+GROUP BY
+  Genre
+ORDER BY
+  Frequency DESC
+								</code>
+							</pre>
+							<p><b>OUTPUT: </b> </p>
+							<div class="table-wrapper">
+								<table class="alt small">
+									<thead>
+										<tr>
+											<th>Genre</th>
+											<th>Frequency</th>
+											<th>AVG_Genre_BPM</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>Pop</td>
+											<td>4</td>
+											<td>127,25</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td>Dance Pop</td>
+											<td>2</td>
+											<td>165</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td>Panamanian Pop</td>
+											<td>2</td>
+											<td>176</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td>Canadian Pop</td>
+											<td>2</td>
+											<td>120</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td>Country Rap</td>
+											<td>2</td>
+											<td>145</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td>...</td>
+											<td>...</td>
+											<td>...</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<h4>Danceability</h4>
+							<p>We want to compare the danceability of the top 10 songs with the bottom 10, to check if a more danceable song places better in the charts:</p>
+							<p>Top 10 songs</p>
+							<pre>
+								<code>
+SELECT
+  AVG(CAST(Danceability AS Float)) AS AVG_Danceability
+FROM
+  top50_2019
+WHERE 
+  Ranking <= 10
+								</code>
+							</pre>
+							<p><b>OUTPUT:</b> AVG_Danceability = 67,8</p>
+							<p>Bottom 10 songs</p>
+							<pre>
+								<code>
+SELECT
+  AVG(CAST(Danceability AS Float)) AS AVG_Danceability
+FROM
+  top50_2019
+WHERE 
+  Ranking BETWEEN 41 AND 50
+								</code>
+							</pre>
+							<p><b>OUTPUT:</b> AVG_Danceability = 71,7</p>
+						<a id="top502021"></a>	
+						<h3><mark>Top 50 2021</mark></h3>
+						<h4>Frequency of Mode</h4>
+						<pre>
+							<code>
+SELECT
+  Modus,
+  COUNT (*) AS Mode_Frequency
+FROM
+  top50_2021
+GROUP BY
+  Modus
+							</code>
+						</pre>
+						<p><b>OUTPUT:</b></p>
+						<div class="table-wrapper">
+							<table class="alt small">
+								<thead>
+									<tr>
+										<th>Mode</th>
+										<th>Mode_Frequency</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>0</td>
+										<td>19</td>
+									</tr>
+								</tbody>
+								<tbody>
+									<tr>
+										<td>1</td>
+										<td>31</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<h4>Frequency of Tonality</h4>
+						<pre>
+							<code>
+SELECT
+	Tonality,
+	COUNT(*) AS Frequency
+FROM
+	top50_2021
+GROUP BY
+	Tonality
+ORDER BY
+	Frequency DESC
+							</code>
+						</pre>
+						<p><b>OUTPUT: </b> </p>
+							<div class="table-wrapper">
+								<table class="alt small">
+									<thead>
+										<tr>
+											<th>Tonality</th>
+											<th>Frequency</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td>8</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td>8</td>
+											<td>7</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td>0</td>
+											<td>7</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td>11</td>
+											<td>6</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td>6</td>
+											<td>4</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td>...</td>
+											<td>...</td>
+										</tr>
+									</tbody>
+								</table>
+						<h3><mark>Global Analysis</mark></h3>
+						<a id="GlobalAnalysis"></a>
+
+						<h4>Common Artists</h4>
+						<pre>
+							<code>
+SELECT
+	COUNT(DISTINCT A.Artist_Name) AS Common_Artists
+FROM
+	top50_2019 AS A
+INNER JOIN top50_2021 AS B ON A.Artist_Name = B.Artist_Name
+							</code>
+						</pre>
+						<p><b>OUTPUT:</b> Common_Artists = 6</p>
+
+						<h4>Repeated songs in both charts</h4>
+						<pre>
+							<code>
+SELECT
+	A.Track_Name
+FROM
+	top50_2019 AS A
+INNER JOIN top50_2021 AS B ON A.Track_Name = B.Track_Name
+							</code>
+						</pre>
+						<p><b>OUTPUT:</b> Someone You Loved</p>
+						<h4>Artists Frequency Table</h4>
+						<pre>
+							<code>
+WITH Big_Chart AS
+	(
+		SELECT
+			Track_Name,
+			Artist_Name
+		FROM
+			top50_2019
+
+		UNION
+
+		SELECT
+			Track_Name,
+			Artist_Name
+		FROM
+			top50_2021
+	)
+SELECT
+	Artist_Name,
+	COUNT(Artist_Name) AS Frequency
+FROM
+	Big_Chart
+GROUP BY
+	Artist_Name
+ORDER BY
+	Frequency DESC
+							</code>
+						</pre>
+						<p><b>OUTPUT: </b> </p>
+							<div class="table-wrapper">
+								<table class="alt small">
+									<thead>
+										<tr>
+											<th>Artist_Name</th>
+											<th>Frequency</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>Ed Sheeran</td>
+											<td>5</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td>Doja Cat</td>
+											<td>4</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td>Ariana Grande</td>
+											<td>4</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td>Bad Bunny</td>
+											<td>4</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td>Olivia Rodrigo</td>
+											<td>4</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td>...</td>
+											<td>...</td>
+										</tr>
+									</tbody>
+								</table>
+						</section>
+						<section>
+							<h2>Analyze</h2>
+							<a id="Analyze"></a>
+							<hr class="solid">
+							<h3>What artists appear the most?</h3>
+							<h3>Which is the most predominant genre?</h3>
+							<h3>Is an easier-to-dance song most likely to appear at the top?</h3>
+							<h3>Is there any song repeated in both charts?</h3>
+						</section>
+						<section>
+							<h2>Share & Visualize</h2>
+							<a id="Share"></a>
+							<hr class="solid">
+							<p>We will now elaborate all the visualizations using the software <b>Tableau</b></p>
+						</section>
+		</div>
+	</body>
+</html>

@@ -18,26 +18,8 @@
 						<a href="index.html" class="logo">
 							<span class="symbol"><img src="images/logo.svg" alt="" /></span>
 						</a>
-
-					<!-- Nav -->
-						<nav>
-							<ul>
-								<li><a href="#menu">Menu</a></li>
-							</ul>
-						</nav>
 					</div>
 				</header>
-			<!-- Menu -->
-				<nav id="menu">
-					<h2>Menu</h2>
-					<ul>
-						<li><a href="index.html">Home</a></li>
-						<li><a href="generic.html">Ipsum veroeros</a></li>
-						<li><a href="generic.html">Tempus etiam</a></li>
-						<li><a href="generic.html">Consequat dolor</a></li>
-						<li><a href="elements.html">Elements</a></li>
-					</ul>
-				</nav>
 
 			<!--Main-->
 				<div id = "main">
@@ -517,15 +499,98 @@ ORDER BY
 							<a id="Analyze"></a>
 							<hr class="solid">
 							<h3>What artists appear the most?</h3>
-							<h3>Which is the most predominant genre?</h3>
+							<p>As we could see in the table of frequencies the most popular artist from 2019 was Ed Sheeran, followed by Billie Eilish and Ariana Grande.</p>
+							<h3>Which is the most predominant genre in the top songs of the chart?</h3>
+							<p>The most predominant genre in the top 25 songs was Pop, because the most repeated genres were variants of itself like Dance Pop, Panamanian Pop or just Pop itself.</p>
 							<h3>Is an easier-to-dance song most likely to appear at the top?</h3>
+							<p>It seems like an easier-to-dance song is not likely to appear in the top songs of the chart, but the difference is so small that we would need a bigger dataset to be confident about it.</p>
 							<h3>Is there any song repeated in both charts?</h3>
+							Indeed, as surprising as it seems there is one song that got to the top 50 chart in both years 2019 and 2021 and it was Someone You Loved by Lewis Capaldi.
 						</section>
 						<section>
+							<style>
+								.mySlides {display:none}
+								.w3-left, .w3-right, .w3-badge {cursor:pointer}
+								.w3-badge {height:13px;width:13px;padding:0}
+								</style>
 							<h2>Share & Visualize</h2>
 							<a id="Share"></a>
 							<hr class="solid">
-							<p>We will now elaborate all the visualizations using the software <b>Tableau</b></p>
+							<p >We will now elaborate all the visualizations using the software <b>Tableau</b></p>
+							<style>
+								.mySlides {display:none;}
+							</style>
+							<div style="text-align: center;">
+								<div class="w3-container">
+								  <h2>Visualizations</h2>
+								</div>
+								
+								<div class="w3-content w3-display-container">
+								
+								<div class="w3-display-container mySlides">
+								  <img src="images/Spotify/Pie.png" style="width:50%">
+								  <div class="w3-display-bottomleft w3-large w3-container w3-padding-16 w3-black" style="padding-bottom: 1em;">
+									Major modus is the most used, i.e, "happy" songs do better in charts.
+								  </div>
+								</div>
+								
+								<div class="w3-display-container mySlides">
+								  <img src="images/Spotify/Keys.png" style="width:50%">
+								  <div class="w3-display-bottomright w3-large w3-container w3-padding-16 w3-black" style="padding-bottom: 1em;">
+									C# is the most used key, followed by C and G#
+								  </div>
+								</div>
+								
+								<div class="w3-display-container mySlides">
+								  <img src="images/Spotify/Artists.png" style="width:75%">
+								  <div class="w3-display-topleft w3-large w3-container w3-padding-16 w3-black" style="padding-bottom: 1em;">
+									Ed Sheeran is the most succesful artist of 2019 + 2021, followed by Ariana Grande.
+								  </div>
+								</div>
+								
+								<div class="w3-display-container mySlides">
+								  <img src="images/Spotify/Genre_BPM_Frequency.png" style="width:50%">
+								  <div class="w3-display-topright w3-large w3-container w3-padding-16 w3-black" style="padding-bottom: 1em;">
+									Pop was the most common Genre in the 2019 chart. (Size implies frequency and colour implies average BPM)
+								  </div>
+								</div>
+								
+								<div style="text-align: center; display: block;">
+								<button class="w3-button w3-display-left w3-black" onclick="plusDivs(-1)">&#10094;</button>
+								<button class="w3-button w3-display-right w3-black" onclick="plusDivs(1)">&#10095;</button>
+								</div>
+								
+								</div>
+							</div>	
+							  
+							  <script>
+							  var slideIndex = 1;
+							  showDivs(slideIndex);
+							  
+							  function plusDivs(n) {
+								showDivs(slideIndex += n);
+							  }
+							  
+							  function currentDiv(n) {
+								showDivs(slideIndex = n);
+							  }
+							  
+							  function showDivs(n) {
+								var i;
+								var x = document.getElementsByClassName("mySlides");
+								var dots = document.getElementsByClassName("demo");
+								if (n > x.length) {slideIndex = 1}
+								if (n < 1) {slideIndex = x.length}
+								for (i = 0; i < x.length; i++) {
+								  x[i].style.display = "none";  
+								}
+								for (i = 0; i < dots.length; i++) {
+								  dots[i].className = dots[i].className.replace(" w3-white", "");
+								}
+								x[slideIndex-1].style.display = "block";  
+								dots[slideIndex-1].className += " w3-white";
+							  }
+							  </script>
 						</section>
 		</div>
 	</body>

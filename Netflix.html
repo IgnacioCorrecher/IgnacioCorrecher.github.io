@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>Spotify Data Analysis</title>
+		<title>Netflix Data Analysis</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -24,7 +24,7 @@
 			<!--Main-->
 				<div id = "main">
 					<div class="inner">
-						<h1>Spotify top50 2019 & 2021</h1>
+						<h1>Netflix (US) Movies and TV Shows 2021</h1>
 						<section>
 							<h2>Index</h2>
 							<hr class="solid">
@@ -34,11 +34,6 @@
 								<li><a href="#Ask">Ask</a></li>
 								<li><a href="#Prepare">Prepare</a></li>
 								<li><a href="#Process">Process</a></li>
-									<ul class="noMargin">
-										<li><a href="#top502019">Top 50 2019</a></li>
-										<li><a href="#top502021">Top 50 2021</a></li>
-										<li><a href="#GlobalAnalysis">Global Analysis</a></li>
-									</ul>
 								<li><a href="#Analyze">Analyze</a></li>
 								<li><a href="#Share">Share & Visualize</a></li>
 							</ol>
@@ -47,11 +42,10 @@
 							<a id="Introduction"></a>
 							<h2>Introduction</h2>
 							<hr class ="solid">
-							<p>This project will be <b>a complete analysis from the beggining</b>. As this is a personal project we will set our own goals in the <b>Ask</b> section. Although we did not retrieve the data by ourselves, we will make sure it's clean and it fulfills naming conventions for its variables in the <b>Prepare</b> section. In the <b>Process</b> phase we will use our tool of choice (in this case SQL) to extract information about our data in the <b>Analysis</b> section. Finally we will use a visualization tool, such as Tableau, to make charts and visualizations about our data in the <b>Share</b> part.</p>
-							<p>We want to emphasize that the DataFrames (DFs) were obtained on <a href="https://www.kaggle.com" target="_blank">kaggle.com</a> and they were put together by:</p>
+							<p>This project is a <b>complete analysis</b> of the Netflix (US) database from mid 2021 with more than 8000 movies or tv shows. We will develop the analysis using variables such as cast members, directors, ratings, release year, duration, country, etc. As this is a personal project we will set our own goals in the <b>Ask</b> section. Although we did not retrieve the data by ourselves, we will make sure it's clean and it fulfills naming conventions for its variables in the <b>Prepare</b> section. In the <b>Process</b> phase we will use our tool of choice (in this case SQL) to extract information about our data in the <b>Analysis</b> section. Finally we will use a visualization tool, such as Tableau, to make charts, visualizations and a dashboard about our data in the <b>Share</b> part.</p>
+							<p>We want to emphasize that the DataFrames (DF) was obtained from <a href="https://www.kaggle.com" target="_blank">kaggle.com</a> and it was put together by:</p>
 							<ul>
-								<li><a href="https://www.kaggle.com/datasets/leonardopena/top50spotify2019" target="_blank">Top 50 Spotify Songs - 2019</a></h> by Leonardo Henrique</li>
-								<li><a href="https://www.kaggle.com/datasets/equinxx/spotify-top-50-songs-in-2021" target="_blank">Top 50 Spotify Songs - 2021</a> by Hanna Yukhymenko</li>
+								<li><a href="https://www.kaggle.com/datasets/shivamb/netflix-shows" target="_blank">Netflix Movies and TV Shows</a></h> by Shivam Bansal</li>
 							</ul> 
 						</section>
 						<section>
@@ -60,25 +54,37 @@
 							<hr class="solid">
 							<p> The variables we will use in the Process, Analysis and Share phases of the project are the following:
 
-								<h3><mark>Top 50 2019</mark></h3>
+								<h3><mark>Netflix Movies and TV Shows</mark></h3>
 								<ul>
-									<li><b>Ranking:</b> Ranking of the song on the chart. </li>
-									<li><b>Track_Name:</b> Name of the track.</li>
-									<li><b>Artist_Name:</b> Name of the artist(s).</li>
-									<li><b>Genre:</b> Genre of the track.</li>
-									<li><b>Beats_Per_Minute:</b> The higher the number the faster the song is.</li>
-									<li><b>Danceability:</b> The higher the value the easier it is to dance.</li>
-									<li><b>Loudness_dB:</b> The higher the value the louder (from -60 to 0dB).</li>
-								</ul>
+									<li><b>Type:</b> Movie or TV Show </li>
+									<li><b>Title:</b> Name of the show.</li>
+									<li><b>Director:</b> Director(s) of the show.</li>
+									<li><b>Cast:</b> Principal actors and actresses of the show.</li>
+									<li><b>Country:</b> Country where the show is from.</li>
+									<li><b>Date_added:</b> Date when the show was added to Netflix (US).</li>
+									<li><b>Release_year:</b> Year when the show was released.</li>
+									<li><b>Rating:</b> What audience is the show aimed to.
+										<ul><b>Movies:</b>
+											<li>G: General audiences.</li>
+											<li>PG: Parental guidance suggested.</li>
+											<li>PG-13: Parents strongly cautioned.</li>
+											<li>R: Restricted.</li>
+											<li>NC-17: Adults only.</li>
+										</ul> 
+										<ul><b>TV Shows:</b>
+											<li>TV-Y: Children under 7.</li>
+											<li>TV-Y7: Intended to children ages 7.</li>
+											<li>TV-Y7 FV: Children ages 7 with Fantasy Violence.</li>
+											<li>TV-G: General audiences.</li>
+											<li>TV-PG: Parental guidance suggested.</li>
+											<li>TV-14: Parents strongly cautioned.</li>
+											<li>TV-MA: Mature audience only.</li>
+										</ul>
+									</li>
+									<li><b>Duration:</b> How long the show lasts. Minutes in movies and seasons in tv shows.</li>
+									<li><b>Listed_in:</b> Classification of the show: Documentaries, Comedies, Drama, etc</li>
+									<li><b>Description:</b> Short description of the show.</li>
 
-								<h3><mark>Top 50 2021</mark></h3>
-								<ul>
-									<li><b>Ranking:</b> Ranking of the song on the chart. </li>
-									<li><b>Track_Name:</b> Name of the track.</li>
-									<li><b>Artist_Name:</b> Name of the artist(s).</li>
-									<li><b>Tonality:</b> The key the track is in. 0 = C, 1 = C#, etc.</li>
-									<li><b>Modus:</b> Modality of a track, i.e (0 = Minor ~ Sad, 1 = Major ~ Happy)</li>
-									<li><b>Duration:</b> How long the song is in milliseconds.</li>
 								</ul>
 							</p>
 						</section>

@@ -42,8 +42,8 @@
 							<a id="Introduction"></a>
 							<h2>Introduction</h2>
 							<hr class ="solid">
-							<p>This project is a <b>complete analysis</b> of the Netflix (US) database from mid 2021 with more than 8000 movies or tv shows. We will develop the analysis using variables such as cast members, directors, ratings, release year, duration, country, etc. As this is a personal project we will set our own goals in the <b>Ask</b> section. Although we did not retrieve the data by ourselves, we will make sure it's clean and it fulfills naming conventions for its variables in the <b>Prepare</b> section. In the <b>Process</b> phase we will use our tool of choice (in this case SQL) to extract information about our data in the <b>Analysis</b> section. Finally we will use a visualization tool, such as Tableau, to make charts, visualizations and a dashboard about our data in the <b>Share</b> part.</p>
-							<p>We want to emphasize that the DataFrames (DF) was obtained from <a href="https://www.kaggle.com" target="_blank">kaggle.com</a> and it was put together by:</p>
+							<p>This project is a <b>complete analysis</b> of the Netflix (US) database from mid 2021 with more than 8000 movies or tv shows. We will develop the analysis using variables such as cast members, directors, ratings, release year, duration, country, etc. As this is a personal project we will set our own goals in the <b>Ask</b> section. Although we did not retrieve the data by ourselves, we will make sure it's clean and it fulfills naming conventions for its variables in the <b>Prepare</b> section. In the <b>Process</b> phase we will use our tool of choice (in this case SQL in MSSM) to extract information about our data in the <b>Analysis</b> section. Finally we will use a visualization tool, such as Tableau, to make charts, visualizations and a dashboard about our data in the <b>Share</b> part.</p>
+							<p>We want to emphasize that the DataFrame (DF) was obtained from <a href="https://www.kaggle.com" target="_blank">kaggle.com</a> and it was put together by:</p>
 							<ul>
 								<li><a href="https://www.kaggle.com/datasets/shivamb/netflix-shows" target="_blank">Netflix Movies and TV Shows</a></h> by Shivam Bansal</li>
 							</ul> 
@@ -59,7 +59,7 @@
 									<li><b>Type:</b> Movie or TV Show </li>
 									<li><b>Title:</b> Name of the show.</li>
 									<li><b>Director:</b> Director(s) of the show.</li>
-									<li><b>Cast:</b> Principal actors and actresses of the show.</li>
+									<li><b>Casting:</b> Principal actors and actresses of the show.</li>
 									<li><b>Country:</b> Country where the show is from.</li>
 									<li><b>Date_added:</b> Date when the show was added to Netflix (US).</li>
 									<li><b>Release_year:</b> Year when the show was released.</li>
@@ -93,28 +93,41 @@
 							<a id="Ask"></a>
 							<h2>Ask</h2>
 							<hr class="solid">
-							<p>Some of the questions we will answer with this data are:
-								<ul>
-									<li>What artists appear the most?</li>
-									<li>Which is the most predominant genre?</li>
-									<li>Is an easier-to-dance song most likely to appear at the top?</li>
-									<li>Is there any song repeated in both charts?</li>
-								</ul>
+							<p>Some of the questions we could answer with this data are, for instance:
+								<ol>
+									<li>What is the average duration of movies in the database?</li>
+									<li>Which directors and actors are appearing the most?</li>
+									<li>Are there a lot of R or higher rated movies or TV Shows?</li>
+									<li>Does Netflix invest more into movies or TV Shows, is there a significant evidence?</li>
+									
+								</ol>
 							</p>
 						</section>
 						<section>
 							<a id="Prepare"></a>
 							<h2>Prepare</h2>
 							<hr class="solid">
-							<p>As we claimed, although our data was previously extracted and prepared due to using imported DFs from Kaggle. We had to make sure there were no blank spaces, NULLs or dirty data in general. We also had to change some of the column names as they were not fulfilling naming convetions such as:</p>
-							<ul>
-								<li>Track.Name => Track_Name</li>
-								<li>Artist.Name => Artist_Name</li>
-								<li>Beats.Per.Minute => Beats_Per_Minute</li>
-								<li>Loudness..dB.. => Loudness_dB</li>
-								<li>Key (Reserved keyword) => Tonality</li>
-								<li>Mode (Reserved keyword) => Modus</li>
-							</ul>
+							<p>As we claimed, although our data was previously extracted and prepared due to using imported DFs from Kaggle. We had to make sure there were no NULLs or dirty data in general.</p>
+
+							<p> We realized our data had some NULL values in the "director", "casting" and "country" columns so we wrote a query to create a new depurated table without these NULL values.</p>
+
+							<pre>
+								<code>
+SELECT
+	*
+INTO
+	NETFLIX.dbo.netflix_cleaned
+FROM
+	NETFLIX.dbo.netflix_titles
+WHERE
+	director IS NOT NULL
+AND
+	casting IS NOT NULL
+AND
+	country IS NOT NULL
+							</code>
+							</pre>
+						<p>This query returns a table with 5336 rows, which means that 3471 rows of our original table with 8807 rows contained NULL values</p>	
 						</section>
 						<section>
 							<a id="Process"></a>
@@ -133,372 +146,7 @@ FROM
 							</code>
 							</pre>
 							<p><b>OUTPUT:</b> BPM_Average = 120,06 bpm</p>
-							<h4>Frequency of Artists</h4>
-							<pre>
-								<code>
-SELECT
-  Artist_Name,
-  COUNT (Artist_Name) AS Frequency
-FROM
-  top50_2019
-GROUP BY
-  Artist_Name
-ORDER BY 
-  Frequency DESC
-								</code>
-							</pre>
-							<p><b>OUTPUT:</b></p>
-							<div class="table-wrapper">
-								<table class="alt small">
-									<thead>
-										<tr>
-											<th>Artist_Name</th>
-											<th>Frequency</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>Ed Sheeran</td>
-											<td>4</td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td>Billie Eilish</td>
-											<td>2</td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td>Ariana Grande</td>
-											<td>2</td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td>The Chainsmokers</td>
-											<td>2</td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td>Shawn Mendes</td>
-											<td>2</td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td>...</td>
-											<td>...</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-							<h4>Frequency of Genre in the top-half faster songs</h4>
-							<p><b>Explanation:</b> We wanted to see which Genres were predominant in the faster (most BPM) songs on the chart. So we took the 25 songs with higher BPM and elaborated the following query:</p>
-							<pre>
-								<code>
-WITH BPM_ordered AS
-(
-    SELECT
-      TOP 25 Beats_Per_Minute,
-	  Genre
-    FROM
-      top50_2019
-    ORDER BY
-      Beats_Per_Minute DESC
-)
-SELECT
-  Genre,
-  COUNT(Genre) AS Frequency,
-  AVG(Beats_Per_Minute) AS AVG_Genre_BPM
-FROM
-  BPM_ordered
-GROUP BY
-  Genre
-ORDER BY
-  Frequency DESC
-								</code>
-							</pre>
-							<p><b>OUTPUT: </b> </p>
-							<div class="table-wrapper">
-								<table class="alt small">
-									<thead>
-										<tr>
-											<th>Genre</th>
-											<th>Frequency</th>
-											<th>AVG_Genre_BPM</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>Pop</td>
-											<td>4</td>
-											<td>127,25</td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td>Dance Pop</td>
-											<td>2</td>
-											<td>165</td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td>Panamanian Pop</td>
-											<td>2</td>
-											<td>176</td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td>Canadian Pop</td>
-											<td>2</td>
-											<td>120</td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td>Country Rap</td>
-											<td>2</td>
-											<td>145</td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td>...</td>
-											<td>...</td>
-											<td>...</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-							<h4>Danceability</h4>
-							<p>We want to compare the danceability of the top 10 songs with the bottom 10, to check if a more danceable song places better in the charts:</p>
-							<p>Top 10 songs</p>
-							<pre>
-								<code>
-SELECT
-  AVG(CAST(Danceability AS Float)) AS AVG_Danceability
-FROM
-  top50_2019
-WHERE 
-  Ranking <= 10
-								</code>
-							</pre>
-							<p><b>OUTPUT:</b> AVG_Danceability = 67,8</p>
-							<p>Bottom 10 songs</p>
-							<pre>
-								<code>
-SELECT
-  AVG(CAST(Danceability AS Float)) AS AVG_Danceability
-FROM
-  top50_2019
-WHERE 
-  Ranking BETWEEN 41 AND 50
-								</code>
-							</pre>
-							<p><b>OUTPUT:</b> AVG_Danceability = 71,7</p>
-						<a id="top502021"></a>	
-						<h3><mark>Top 50 2021</mark></h3>
-						<h4>Frequency of Mode</h4>
-						<pre>
-							<code>
-SELECT
-  Modus,
-  COUNT (*) AS Mode_Frequency
-FROM
-  top50_2021
-GROUP BY
-  Modus
-							</code>
-						</pre>
-						<p><b>OUTPUT:</b></p>
-						<div class="table-wrapper">
-							<table class="alt small">
-								<thead>
-									<tr>
-										<th>Mode</th>
-										<th>Mode_Frequency</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>0</td>
-										<td>19</td>
-									</tr>
-								</tbody>
-								<tbody>
-									<tr>
-										<td>1</td>
-										<td>31</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<h4>Frequency of Tonality</h4>
-						<pre>
-							<code>
-SELECT
-	Tonality,
-	COUNT(*) AS Frequency
-FROM
-	top50_2021
-GROUP BY
-	Tonality
-ORDER BY
-	Frequency DESC
-							</code>
-						</pre>
-						<p><b>OUTPUT: </b> </p>
-							<div class="table-wrapper">
-								<table class="alt small">
-									<thead>
-										<tr>
-											<th>Tonality</th>
-											<th>Frequency</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>1</td>
-											<td>8</td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td>8</td>
-											<td>7</td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td>0</td>
-											<td>7</td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td>11</td>
-											<td>6</td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td>6</td>
-											<td>4</td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td>...</td>
-											<td>...</td>
-										</tr>
-									</tbody>
-								</table>
-						<h3><mark>Global Analysis</mark></h3>
-						<a id="GlobalAnalysis"></a>
-
-						<h4>Common Artists</h4>
-						<pre>
-							<code>
-SELECT
-	COUNT(DISTINCT A.Artist_Name) AS Common_Artists
-FROM
-	top50_2019 AS A
-INNER JOIN top50_2021 AS B ON A.Artist_Name = B.Artist_Name
-							</code>
-						</pre>
-						<p><b>OUTPUT:</b> Common_Artists = 6</p>
-
-						<h4>Repeated songs in both charts</h4>
-						<pre>
-							<code>
-SELECT
-	A.Track_Name
-FROM
-	top50_2019 AS A
-INNER JOIN top50_2021 AS B ON A.Track_Name = B.Track_Name
-							</code>
-						</pre>
-						<p><b>OUTPUT:</b> Someone You Loved</p>
-						<h4>Artists Frequency Table</h4>
-						<pre>
-							<code>
-WITH Big_Chart AS
-	(
-		SELECT
-			Track_Name,
-			Artist_Name
-		FROM
-			top50_2019
-
-		UNION
-
-		SELECT
-			Track_Name,
-			Artist_Name
-		FROM
-			top50_2021
-	)
-SELECT
-	Artist_Name,
-	COUNT(Artist_Name) AS Frequency
-FROM
-	Big_Chart
-GROUP BY
-	Artist_Name
-ORDER BY
-	Frequency DESC
-							</code>
-						</pre>
-						<p><b>OUTPUT: </b> </p>
-							<div class="table-wrapper">
-								<table class="alt small">
-									<thead>
-										<tr>
-											<th>Artist_Name</th>
-											<th>Frequency</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>Ed Sheeran</td>
-											<td>5</td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td>Doja Cat</td>
-											<td>4</td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td>Ariana Grande</td>
-											<td>4</td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td>Bad Bunny</td>
-											<td>4</td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td>Olivia Rodrigo</td>
-											<td>4</td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td>...</td>
-											<td>...</td>
-										</tr>
-									</tbody>
-								</table>
+							
 						</section>
 						<section>
 							<h2>Analyze</h2>
